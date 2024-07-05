@@ -4,7 +4,7 @@ import { logger } from "../utils/main.js";
 
 login.get("/", async (req, res) => {
 	try {
-		const title = "Fuego Burgers®";
+		const title = "PADEL®";
 		return res.status(200).render("sessions", { title });
 	} catch (e) {
 		logger.error(e.message);

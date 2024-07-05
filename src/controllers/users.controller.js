@@ -178,7 +178,7 @@ class UserController {
         <div>
           <h1>Hola ${user.first_name || "Usuario"},</h1>
           <p>Tu cuenta ha sido eliminada debido a la inactividad durante los últimos 2 días.</p>
-          <p>Fuego Burgers</p>
+          <p>PADEL</p>
         </div>
       `;
         await sendEmail(to, subject, htmlContent);

@@ -24,7 +24,7 @@ paths:
                     last_name: "Coder"
                     age: 100
                     email: "adminCoder@coder.com"
-                    password: "$2b$10$XATVIv.FDoTe.dx8dl/rielsMr7kLDjLr7lPunv66FSI6WPsuF7j2"
+                    password: "123"
                     role: "admin"
                     premium: false
                     cartID: "rXkhi1VhHkN0Qg84MFadluaTU"
@@ -33,9 +33,9 @@ paths:
                     documents: []
                   - _id: "651ff453be791cff7345f3ca"
                     first_name: "Franco"
-                    last_name: "Galcio"
+                    last_name: "Gaio"
                     age: 27
-                    email: "francoivanga@gmail.com"
+                    email: "franca@gmail.com"
                     password: "$2b$10$Js0zou8wXum5Jo1zhF0ZQu9WYmVBbX9jaDphLmodpXY2fhnG3JwEy"
                     role: "user"
                     premium: true
@@ -71,8 +71,8 @@ paths:
                     email: "adminCoder@coder.com"
                     role: "admin"
                   - first_name: "Franco"
-                    last_name: "Galluccio"
-                    email: "franco@gmail.com"
+                    last_name: "Gaio"
+                    email: "franca@gmail.com"
                     role: "user"
 
         "500":
@@ -171,9 +171,9 @@ paths:
                   userToDelet:
                     _id: "652080dd33899a38502fb205"
                     first_name: "Nahuel"
-                    last_name: "Lescano"
+                    last_name: "Leano"
                     age: 24
-                    email: "nlescano@gmail.com"
+                    email: "nleano@gmail.com"
                     password: "$2b$10$Th/Goiz020UJldrPrl2J9.4Y./3BSNUCnt/Z2UJHQsMzdvEXe0w/a"
                     role: "user"
                     premium: false
@@ -254,9 +254,9 @@ paths:
                 user:
                   _id: "651ff50bbe791cff7345f40c"
                   first_name: "Nahuel"
-                  last_name: "Lescano"
+                  last_name: "Leano"
                   age: 24
-                  email: "nlescano@gmail.com"
+                  email: "nleano@gmail.com"
                   password: "$2b$10$C1mLeYUEKK5E31lqsTzjVO4A8CBBYWWwAmMkbUEQtWwLMvBXtikIu"
                   role: "user"
                   premium: true

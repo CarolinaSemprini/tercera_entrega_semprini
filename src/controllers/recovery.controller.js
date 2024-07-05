@@ -23,7 +23,7 @@ class RecoveryController {
       if (foundToken && foundToken.expire > Date.now()) {
         const validToken = foundToken.token;
         const validEmail = foundToken.email;
-        const title = "Fuego Burgers®";
+        const title = "PADEL®";
         return res.status(200).render("recovery-pass", { title, validToken, validEmail });
       } else {
         return res.status(404).render("error", { errorMsg: "Token expirado o inválido" });

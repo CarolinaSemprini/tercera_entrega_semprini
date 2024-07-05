@@ -5,7 +5,7 @@ import { recoveryController } from "../controllers/recovery.controller.js";
 
 recovery.get("/", async (req, res) => {
   try {
-    const title = "Fuego Burgers®";
+    const title = "PADEL®";
     return res.status(200).render("recovery", { title });
   } catch (e) {
     logger.error(e.message);

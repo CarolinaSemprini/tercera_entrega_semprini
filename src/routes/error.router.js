@@ -6,7 +6,7 @@ errorRouter.get("/", async (req, res) => {
 	try {
 		const errorMsg = req.session.errorMsg;
 		req.session.errorMsg = null;
-		const title = "Fuego Burgers®";
+		const title = "PADEL®";
 		return res.status(200).render("error", { title, errorMsg });
 	} catch (e) {
 		logger.error(e.message);
