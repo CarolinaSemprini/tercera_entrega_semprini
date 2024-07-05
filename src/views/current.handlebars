@@ -1,0 +1,142 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col g-0">
+      <div class="bg-image" style="filter: blur(5px);"></div>
+
+      <div class="contenedorTituloPrincipal">
+        <a href="/home"><img src="/images/logo.png" class="logo" alt="" /></a>
+        <div
+          class="d-flex justify-content-center align-items-center flex-column bg-dark mt-3"
+          style="border-radius: 20px 20px 20px 20px"
+        >
+          {{#if user}}
+            <div class="container emp-profile">
+              <div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="profile-img">
+                      <img src="/images/user.png" alt="" />
+                      <div class="file btn btn-lg formImg">
+                        <span class="btn btn-outline-dark text-white">Change Photo</span>
+                        <form action="/api/users/{{user._id}}/profile" method="POST" enctype="multipart/form-data">
+                          <input type="file" name="profileImage" id="profileImage" accept="image/*" />
+                          <button type="submit" class="btn btn-dark text-white">Subir</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="profile-head">
+                      <h5>
+                        {{user.first_name}}<span> {{user.last_name}}</span>
+                      </h5>
+                      <h6>
+                        Rol:
+                        {{user.role}}
+                      </h6>
+                      <p class="proile-rating">Last Connection : <span>{{user.last_connection}}</span></p>
+                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a
+                            class="nav-link active"
+                            id="home-tab"
+                            data-toggle="tab"
+                            href="#home"
+                            role="tab"
+                            aria-controls="home"
+                            aria-selected="true"
+                          >About</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label>first_name</label>
+                          </div>
+                          <div class="col-md-6">
+                            <p>{{user.first_name}}</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label>last_name</label>
+                          </div>
+                          <div class="col-md-6">
+                            <p>{{user.last_name}}</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label>Age</label>
+                          </div>
+                          <div class="col-md-6">
+                            <p>{{user.age}}</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label>Email</label>
+                          </div>
+                          <div class="col-md-6">
+                            <p>{{user.email}}</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label>Premium</label>
+                          </div>
+                          <div class="col-md-6">
+                            <p>{{user.premium}}</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label>Rol</label>
+                          </div>
+                          <div class="col-md-6">
+                            <p>{{user.role}}</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label>Documentos</label>
+                          </div>
+                          <div class="col-md-6">
+                            {{#if user.documents.length}}
+                              <ul>
+                                {{#each user.documents}}
+                                  <li>
+                                    <a href="{{this.reference}}" target="_blank">{{this.name}}</a>
+                                  </li>
+                                {{/each}}
+                              </ul>
+                            {{else}}
+                              <p>Aún no cargaste documentos</p>
+                            {{/if}}
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <a href="/purchases">Mis compras</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

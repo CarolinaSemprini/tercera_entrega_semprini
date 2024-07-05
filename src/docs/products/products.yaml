@@ -1,0 +1,534 @@
+paths:
+  /api/products:
+    get:
+      summary: Obtiene todos los productos disponibles
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Productos devueltos exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductListResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    payload:
+                      - _id: "65202a558200b2e032fc4cd7"
+                        title: "Raqueta de Tenis Pro"
+                        description: "Raqueta profesional de alta calidad para jugadores avanzados."
+                        price: 150.00
+                        thumbnail: "./images/raqueta_pro.jpg"
+                        code: 2001
+                        stock: 50
+                        __v: 0
+                        category: "Raquetas"
+                        owner: "adminCoder@coder.com"
+                      - _id: "65202a558200b2e032fc4cd8"
+                        title: "Pelotas de Tenis Pack"
+                        description: "Pack de 3 pelotas de tenis de alta durabilidad."
+                        price: 10.00
+                        thumbnail: "./images/pelotas_pack.jpg"
+                        code: 2002
+                        stock: 200
+                        __v: 0
+                        category: "Pelotas"
+                        owner: "adminCoder@coder.com"
+                      - _id: "65202a558200b2e032fc4cd9"
+                        title: "Cuerda de Tenis Premium"
+                        description: "Cuerda de alta resistencia para raquetas de tenis."
+                        price: 30.00
+                        thumbnail: "./images/cuerda_premium.jpg"
+                        code: 2003
+                        stock: 100
+                        __v: 0
+                        category: "Accesorios"
+                        owner: "adminCoder@coder.com"
+                      - _id: "65202a558200b2e032fc4cda"
+                        title: "Bolsa para Raqueta"
+                        description: "Bolsa resistente para transportar raquetas de tenis."
+                        price: 40.00
+                        thumbnail: "./images/bolsa_raqueta.jpg"
+                        code: 2004
+                        stock: 75
+                        __v: 0
+                        category: "Accesorios"
+                        owner: "adminCoder@coder.com"
+                      - _id: "65202a558200b2e032fc4cdb"
+                        title: "Zapatillas de Tenis"
+                        description: "Zapatillas cómodas y duraderas para jugar al tenis."
+                        price: 70.00
+                        thumbnail: "./images/zapatillas_tenis.jpg"
+                        code: 2005
+                        stock: 60
+                        __v: 0
+                        category: "Calzado"
+                        owner: "adminCoder@coder.com"
+        "500":
+          description: Error del servidor. Usualmente generando la query o falla la conexión a la DB
+    post:
+      summary: Crea un nuevo producto
+      tags:
+        - Products
+      security:
+        - bearerAuth: [] # Asegura que el usuario esté autenticado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/createProduct"
+      responses:
+        "201":
+          description: Producto creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    msg: Producto Creado
+                    payload:
+                      _id: "65202a558200b2e032fc4cdc"
+                      title: "Raqueta de Tenis Junior"
+                      description: "Raqueta ligera y manejable para jóvenes jugadores."
+                      category: "Raquetas"
+                      price: 50.00
+                      thumbnail: "./images/raqueta_junior.jpg"
+                      code: 2006
+                      stock: 80
+        "400":
+          description: Error de solicitud. Puede ser debido a datos de entrada incorrectos.
+        "401":
+          description: No autorizado. Solo los administradores o usuarios premium pueden realizar esta acción.
+        "500":
+          description: Error del servidor. Usualmente, falla en la creación del producto o no pasa la validacion de campos requeridos.
+  /api/products/paginate:
+    get:
+      summary: Obtiene una lista de productos paginados
+      tags:
+        - Products
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Cantidad máxima de productos por página (por defecto 5)
+          schema:
+            type: integer
+            default: 5
+        - name: pagina
+          in: query
+          required: false
+          description: Número de página (por defecto 1)
+          schema:
+            type: integer
+            default: 1
+      responses:
+        "200":
+          description: Productos devueltos exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedProductListResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    msg: Mostrando los 5 productos
+                    payload:
+                      - _id: "65202a558200b2e032fc4cd7"
+                        title: "Raqueta de Tenis Pro"
+                        description: "Raqueta profesional de alta calidad para jugadores avanzados."
+                        price: 150.00
+                        thumbnail: "./images/raqueta_pro.jpg"
+                        code: 2001
+                        stock: 50
+                        __v: 0
+                        category: "Raquetas"
+                        owner: "adminCoder@coder.com"
+                      - _id: "65202a558200b2e032fc4cd8"
+                        title: "Pelotas de Tenis Pack"
+                        description: "Pack de 3 pelotas de tenis de alta durabilidad."
+                        price: 10.00
+                        thumbnail: "./images/pelotas_pack.jpg"
+                        code: 2002
+                        stock: 200
+                        __v: 0
+                        category: "Pelotas"
+                        owner: "adminCoder@coder.com"
+                      - _id: "65202a558200b2e032fc4cd9"
+                        title: "Cuerda de Tenis Premium"
+                        description: "Cuerda de alta resistencia para raquetas de tenis."
+                        price: 30.00
+                        thumbnail: "./images/cuerda_premium.jpg"
+                        code: 2003
+                        stock: 100
+                        __v: 0
+                        category: "Accesorios"
+                        owner: "adminCoder@coder.com"
+                      - _id: "65202a558200b2e032fc4cda"
+                        title: "Bolsa para Raqueta"
+                        description: "Bolsa resistente para transportar raquetas de tenis."
+                        price: 40.00
+                        thumbnail: "./images/bolsa_raqueta.jpg"
+                        code: 2004
+                        stock: 75
+                        __v: 0
+                        category: "Accesorios"
+                        owner: "adminCoder@coder.com"
+                      - _id: "65202a558200b2e032fc4cdb"
+                        title: "Zapatillas de Tenis"
+                        description: "Zapatillas cómodas y duraderas para jugar al tenis."
+                        price: 70.00
+                        thumbnail: "./images/zapatillas_tenis.jpg"
+                        code: 2005
+                        stock: 60
+                        __v: 0
+                        category: "Calzado"
+                        owner: "adminCoder@coder.com"
+                    totalDocs: 5
+                    totalPages: 1
+                    prevPage: null
+                    nextPage: null
+                    page: 1
+                    hasPrevPage: false
+                    hasNextPage: false
+                    prevLink: null
+                    nextLink: null
+  /api/products/{productId}:
+    get:
+      summary: Obtiene un producto por su ID
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    msg: Mostrando el producto con id 65202a558200b2e032fc4cd8
+                    payload:
+                      productById:
+                        _id: "65202a558200b2e032fc4cd8"
+                        title: "Pelotas de Tenis Pack"
+                        description: "Pack de 3 pelotas de tenis de alta durabilidad."
+                        price: 10.00
+                        thumbnail: "./images/pelotas_pack.jpg"
+                        code: 2002
+                        stock: 200
+                        __v: 0
+                        category: "Pelotas"
+                        owner: "adminCoder@coder.com"
+        "500":
+          description: Error del servidor. Usualmente falla la búsqueda por error de ID
+    put:
+      summary: Actualizar un producto a partir del ID
+      tags:
+        - Products
+      security:
+        - bearerAuth: [] # Asegura que el usuario esté autenticado
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se desea actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/updateProduct"
+      responses:
+        "200":
+          description: Producto actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    msg: Producto Actualizado
+                    payload:
+                      _id: "65202a558200b2e032fc4cd8"
+                      title: "Pelotas de Tenis Pack"
+                      description: "Pack de 3 pelotas de tenis de alta durabilidad."
+                      price: 12.00
+                      thumbnail: "./images/pelotas_pack.jpg"
+                      code: 2002
+                      stock: 190
+        "400":
+          description: Error de solicitud. Puede ser debido a datos de entrada incorrectos.
+        "401":
+          description: No autorizado. Solo los administradores o usuarios premium pueden realizar esta acción.
+        "500":
+          description: Error del servidor. Usualmente, falla en la actualización del producto o no pasa la validacion de campos requeridos.
+    delete:
+      summary: Elimina un producto por su ID
+      tags:
+        - Products
+      security:
+        - bearerAuth: [] # Asegura que el usuario esté autenticado
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se desea eliminar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    msg: Producto Eliminado
+        "400":
+          description: Error de solicitud. Puede ser debido a datos de entrada incorrectos.
+        "401":
+          description: No autorizado. Solo los administradores o usuarios premium pueden realizar esta acción.
+        "500":
+          description: Error del servidor. Usualmente, falla en la eliminación del producto.
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - thumbnail
+        - code
+        - stock
+        - category
+        - owner
+      properties:
+        _id:
+          type: string
+          description: ID del producto
+          example: "65202a558200b2e032fc4cd7"
+        title:
+          type: string
+          description: Título del producto
+          example: "Raqueta de Tenis Pro"
+        description:
+          type: string
+          description: Descripción del producto
+          example: "Raqueta profesional de alta calidad para jugadores avanzados."
+        price:
+          type: number
+          format: float
+          description: Precio del producto
+          example: 150.00
+        thumbnail:
+          type: string
+          description: URL de la imagen del producto
+          example: "./images/raqueta_pro.jpg"
+        code:
+          type: integer
+          description: Código del producto
+          example: 2001
+        stock:
+          type: integer
+          description: Cantidad disponible del producto
+          example: 50
+        category:
+          type: string
+          description: Categoría del producto
+          example: "Raquetas"
+        owner:
+          type: string
+          description: Propietario del producto
+          example: "adminCoder@coder.com"
+    ProductListResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+          example: success
+        payload:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+    PaginatedProductListResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+          example: success
+        msg:
+          type: string
+          description: Mensaje de la respuesta
+          example: Mostrando los 5 productos
+        payload:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+        totalDocs:
+          type: integer
+          description: Cantidad total de productos
+          example: 5
+        totalPages:
+          type: integer
+          description: Cantidad total de páginas
+          example: 1
+        prevPage:
+          type: integer
+          description: Página anterior
+          example: null
+        nextPage:
+          type: integer
+          description: Página siguiente
+          example: null
+        page:
+          type: integer
+          description: Página actual
+          example: 1
+        hasPrevPage:
+          type: boolean
+          description: Indica si hay página anterior
+          example: false
+        hasNextPage:
+          type: boolean
+          description: Indica si hay página siguiente
+          example: false
+        prevLink:
+          type: string
+          description: URL de la página anterior
+          example: null
+        nextLink:
+          type: string
+          description: URL de la página siguiente
+          example: null
+    ProductResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+          example: success
+        msg:
+          type: string
+          description: Mensaje de la respuesta
+          example: Producto Creado
+        payload:
+          $ref: "#/components/schemas/Product"
+  requestBodies:
+    createProduct:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - thumbnail
+        - code
+        - stock
+        - category
+        - owner
+      properties:
+        title:
+          type: string
+          description: Título del producto
+          example: "Raqueta de Tenis Junior"
+        description:
+          type: string
+          description: Descripción del producto
+          example: "Raqueta ligera y manejable para jóvenes jugadores."
+        price:
+          type: number
+          format: float
+          description: Precio del producto
+          example: 50.00
+        thumbnail:
+          type: string
+          description: URL de la imagen del producto
+          example: "./images/raqueta_junior.jpg"
+        code:
+          type: integer
+          description: Código del producto
+          example: 2006
+        stock:
+          type: integer
+          description: Cantidad disponible del producto
+          example: 80
+        category:
+          type: string
+          description: Categoría del producto
+          example: "Raquetas"
+        owner:
+          type: string
+          description: Propietario del producto
+          example: "adminCoder@coder.com"
+    updateProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Título del producto
+          example: "Raqueta de Tenis Junior"
+        description:
+          type: string
+          description: Descripción del producto
+          example: "Raqueta ligera y manejable para jóvenes jugadores."
+        price:
+          type: number
+          format: float
+          description: Precio del producto
+          example: 55.00
+        thumbnail:
+          type: string
+          description: URL de la imagen del producto
+          example: "./images/raqueta_junior_actualizada.jpg"
+        code:
+          type: integer
+          description: Código del producto
+          example: 2006
+        stock:
+          type: integer
+          description: Cantidad disponible del producto
+          example: 70
+        category:
+          type: string
+          description: Categoría del producto
+          example: "Raquetas"
+        owner:
+          type: string
+          description: Propietario del producto
+          example: "adminCoder@coder.com"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

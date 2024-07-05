@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  title: Documentación de la API de Carritos de Compra
+  version: 1.0.0
+paths:
+  /api/carts:
+    get:
+      summary: Obtiene todos los carritos de compra
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Los carritos de compra fueron devueltos satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta (success en este caso)
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Cart"
+              example:
+                status: success
+                payload:
+                  - id: "rXkhi1VhHkN0Qg84MFadluaTU"
+                    products: []
+                    __v: 0
+                  - id: "zOTWOAXfvgqCVTWg2OUxNxRHc"
+                    products: []
+                    __v: 0
+                  # Otros objetos similares
+        "500":
+          description: Error del servidor. Usualmente generando la query o falla la conexión a la DB
+  /api/carts/{cartId}:
+    get:
+      summary: Obtiene un carrito de compra por ID
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra que se busca
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Carrito de compra encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartResponse"
+        "500":
+          description: Error del servidor. Usualmente generando la query o falla la conexión a la DB
+    put:
+      summary: Actualizar cantidades o productos de un carrito de compra a través de su ID
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra que se desea actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCartRequest"
+      responses:
+        "200":
+          description: El carrito de compra fue actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartResponse"
+        "500":
+          description: Error del servidor. Usualmente falla la actualización o la conexión a la base de datos
+  /api/carts/{cartId}/products/{productId}:
+    post:
+      summary: Agrega un producto al carrito de compra mediante el ID del carrito y el ID del producto
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra al que se desea agregar el producto
+          schema:
+            type: string
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto a agregar al carrito
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto agregado exitosamente al carrito de compra
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartResponse"
+        "500":
+          description: Error del servidor. Usualmente falla la búsqueda por ID o no pasa la validación de campos requeridos
+    put:
+      summary: Actualizar la cantidad de un producto específico a través de su ID
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra que se busca
+          schema:
+            type: string
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se desea actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductQuantity"
+      responses:
+        "200":
+          description: El carrito de compra fue actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartResponse"
+        "500":
+          description: Error del servidor. Usualmente falla la actualización por no encontrar los ID o la conexión a la base de datos
+    delete:
+      summary: Elimina un producto específico del carrito de compra
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra del cual se eliminará el producto
+          schema:
+            type: string
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se desea eliminar del carrito
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado exitosamente del carrito de compra
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CartResponse"
+        "500":
+          description: Error del servidor. Usualmente falla la eliminación por no encontrar los ID o la conexión a la base de datos
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID auto generado por mongo para el carrito de compra
+        products:
+          type: array
+          description: Lista de productos en el carrito
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto en el carrito
+              quantity:
+                type: number
+                description: Cantidad del producto en el carrito
+    CartResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta (success en este caso)
+        payload:
+          $ref: "#/components/schemas/Cart"
+    UpdateCartRequest:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto en el carrito
+              quantity:
+                type: number
+                description: Cantidad del producto en el carrito
+    UpdateProductQuantity:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: Cantidad a actualizar para el producto
