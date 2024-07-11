@@ -68,9 +68,9 @@ describe("TEST API", () => {
       const productMock = {
         title: "Producto de prueba",
         description: "Esta es una descripción de prueba",
-        category: "Electrónica",
+        category: "Padel",
         price: 29.99,
-        thumbnail: "https://ejemplo.com/imagen.jpg",
+        thumbnail: "https://assets.jumpseller.com/store/padel-lover/themes/530259/settings/47f7d9e6ffdffd750409/padelover_slider_pc_coleccion_bullpadel_2024%20copia.jpg?1718153386",
         code: 1234,
         stock: 10,
       };
