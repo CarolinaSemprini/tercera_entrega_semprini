@@ -24,7 +24,7 @@
           {{#if plainCart.length}}
             {{#each plainCart}}
               <div class="cartItem">
-                <img class="cartImg" src=".{{this.product.thumbnail}}" alt="{{this.product.title}}" />
+                <img class="cartImg" src={{this.product.thumbnail}} alt="{{this.product.title}}" />
                 <div class="cartHead">
                   <p class="titles titulo">Titulo</p>
                   <p class="content">{{this.product.title}}</p>
