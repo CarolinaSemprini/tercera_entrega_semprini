@@ -9,7 +9,6 @@
   },
   "scripts": {
     "start": "node ./src/app.js --mode PRODUCTION",
-    "dev": "nodemon -e yaml,js ./src/app.js --mode DEVELOPMENT",
     "test": "mocha --timeout 10000 test/supertest.test.js"
   },
   "dependencies": {
@@ -43,12 +42,11 @@
     "sweetalert2": "^11.6.13",
     "toastify-js": "^1.12.0",
     "twilio": "^4.14.1",
-    "winston": "^3.10.0"
-  },
-  "devDependencies": {
+    "winston": "^3.10.0",
     "chai": "^4.4.1",
     "mocha": "^10.6.0",
     "nodemon": "^3.0.1",
     "supertest": "^6.3.4"
   }
+  
 }

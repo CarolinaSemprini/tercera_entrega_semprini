@@ -7,9 +7,8 @@ program.parse();
 
 dotenv.config({
   path:
-    program.opts().mode === "DEVELOPMENT"
-      ? "./.env.development"
-      : "./.env.production",
+    "./.env.production"
+
 });
 
 export default {
