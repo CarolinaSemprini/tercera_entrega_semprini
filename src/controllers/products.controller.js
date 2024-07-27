@@ -1,7 +1,9 @@
+//archivo products.controller.js
 import ProductsDTO from "./DTO/products.dto.js";
 import { productService } from "../services/products.service.js";
 import { cartService } from "../services/carts.service.js";
 import { logger } from "../utils/main.js";
+import { userService } from "../services/users.service.js";
 import { sendEmail } from "../utils/main.js";
 import env from "../config/enviroment.config.js";
 
@@ -278,7 +280,7 @@ class ProductsController {
     }
   }
 
-  async delete(req, res) {
+  /*async delete(req, res) {
     try {
       const { _id } = req.params;
 
@@ -298,6 +300,66 @@ class ProductsController {
             logger.info(`Correo electrónico enviado a ${userEmail}: ${subject}`);
           } catch (error) {
             logger.error(`Error al enviar el correo electrónico a ${userEmail}:`, error);
+          }
+        }
+
+        return res.status(200).json({
+          status: "success",
+          msg: "Producto Eliminado",
+          payload: `Has eliminado el producto con ID ${_id}`,
+        });
+      } else {
+        return res.status(404).json({
+          status: "error",
+          msg: "El producto no existe",
+          payload: {},
+        });
+      }
+    } catch (e) {
+      logger.error(e.message);
+      return res.status(500).json({
+        status: "error",
+        msg: "Error en el servidor",
+        payload: {},
+      });
+    }
+  }*/
+
+  async delete(req, res) {
+    try {
+      const { _id } = req.params;
+
+      // Obtén el producto por ID antes de eliminarlo
+      const product = await productService.readById(_id);
+
+      if (!product) {
+        return res.status(404).json({
+          status: "error",
+          msg: "El producto no existe",
+          payload: {},
+        });
+      }
+
+      // Elimina el producto
+      const result = await productService.delete(_id);
+
+      if (result?.deletedCount > 0) {
+        // Obtén el propietario del producto
+        const ownerEmail = product.owner;
+
+        // Obtén los detalles del usuario propietario
+        const userOwner = await userService.readByEmail(ownerEmail);
+
+        // Verificar si el propietario es premium
+        if (userOwner && userOwner.role === "premium") {
+          const subject = "Producto Eliminado";
+          const htmlContent = `El producto con ID ${_id} ha sido eliminado de tu cuenta premium.`;
+
+          try {
+            await sendEmail(ownerEmail, subject, htmlContent);
+            logger.info(`Correo electrónico enviado a ${ownerEmail}: ${subject}`);
+          } catch (error) {
+            logger.error(`Error al enviar el correo electrónico a ${ownerEmail}:`, error);
           }
         }
 

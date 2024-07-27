@@ -1,3 +1,4 @@
+//archivo users.mongoose.js
 import { Schema, model } from "mongoose";
 import { generateCartId } from "../../../utils/main.js";
 

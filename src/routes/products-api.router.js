@@ -1,3 +1,4 @@
+//archivo products-api.router.js
 import express from "express";
 export const productsApiRouter = express.Router();
 import { productsController } from "../controllers/products.controller.js";

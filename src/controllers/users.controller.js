@@ -1,3 +1,4 @@
+//archivo users.controller.js
 import UsersDTO from "./DTO/users.dto.js";
 import { userService } from "../services/users.service.js";
 import { logger } from "../utils/main.js";
@@ -125,8 +126,8 @@ class UserController {
       if (!user) {
         return res.status(404).json({ status: 'error', msg: 'User not found' });
       }
-
-      const cart = await Cart.findById(cartId);
+      //se cambio cart a minuscula, estaba en mayuscula
+      const cart = await cart.findById(cartId);
       if (!cart) {
         return res.status(404).json({ status: 'error', msg: 'Cart not found' });
       }
@@ -274,6 +275,34 @@ class UserController {
       });
     }
   }
+
+  //se agrega el metodo para buscar por email
+  async readByEmail(req, res) {
+    try {
+      const { email } = req.params;
+      const user = await userService.readByEmail(email);
+      if (user) {
+        return res.status(200).json({
+          status: "success",
+          msg: `Mostrando el usuario con email ${email}`,
+          payload: { user },
+        });
+      } else {
+        return res.status(404).json({
+          status: "error",
+          msg: `El usuario con email ${email} no existe`,
+        });
+      }
+    } catch (e) {
+      logger.error(e.message);
+      return res.status(500).json({
+        status: "error",
+        msg: "Error en el servidor",
+        payload: {},
+      });
+    }
+  }
+
 }
 
 export const usersController = new UserController();

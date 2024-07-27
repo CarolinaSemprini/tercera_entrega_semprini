@@ -1,3 +1,4 @@
+//user-api.routes.js
 import express from "express";
 export const usersApiRouter = express.Router();
 import { usersController } from "../controllers/users.controller.js";
@@ -11,3 +12,6 @@ usersApiRouter.get("/premium/:uid", usersController.premiumSwitch); /* <---- ACT
 usersApiRouter.get("/role/:uid", usersController.rolSwitch); /* <---- ACTUALIZAR PROPIEDAD ROL POR ID */
 usersApiRouter.post("/:uid/profile", profileUploader.single("profileImage"), usersController.postDocuments); /* <---- SUBIR IMAGENES AL PERFIL DE USUARIO */
 usersApiRouter.delete("/:_id", usersController.delete); /* <---- ELIMINAR UN USUARIO POR ID */
+
+// Agregar la nueva ruta para leer un usuario por email
+usersApiRouter.get("/email/:email", usersController.readByEmail); /* <---- LEER UN USUARIO POR EMAIL */

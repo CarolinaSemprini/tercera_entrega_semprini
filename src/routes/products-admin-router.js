@@ -1,3 +1,4 @@
+//products-admin-router.js
 import express from "express";
 export const productsAdminRouter = express.Router();
 import { productsController } from "../controllers/products.controller.js";

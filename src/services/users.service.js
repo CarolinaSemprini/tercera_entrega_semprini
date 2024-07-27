@@ -1,3 +1,4 @@
+//archivo users.service.js
 import importModels from "../DAO/factory.js";
 import bcrypt from "bcrypt";
 import { createHash, isValidPassword } from "../utils/main.js";
@@ -163,6 +164,17 @@ class UserService {
     try {
       const updatedUser = await usersModel.postDocuments(uid, file);
       return updatedUser;
+    } catch (e) {
+      logger.error(e.message);
+      throw e;
+    }
+  }
+
+  //se agrega el metodo readByEmail
+  async readByEmail(email) {
+    try {
+      const user = await usersModel.readOne(email);
+      return user;
     } catch (e) {
       logger.error(e.message);
       throw e;
