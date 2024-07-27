@@ -1,3 +1,4 @@
+//archivo index.js
 // ELIMINAR UN USUARIO DESDE EL FRONT
 
 const deleteUser = document.querySelectorAll(".eliminar-usuario");
@@ -63,8 +64,14 @@ editRoleButtons.forEach(button => {
       if (result.isConfirmed) {
         try {
           const response = await fetch(`/api/users/role/${userId}`, {
-            method: "GET",
+            //modificacion de get a post
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ userId })
           });
+
 
           if (response.ok) {
             Swal.fire({
@@ -300,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 location.reload();
               } else {
               }
-            } catch (error) {}
+            } catch (error) { }
           }
         })();
       });
@@ -337,7 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 1500);
           } else {
           }
-        } catch (error) {}
+        } catch (error) { }
       }
     });
   });

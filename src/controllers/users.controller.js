@@ -242,9 +242,10 @@ class UserController {
     try {
       const userId = req.params.uid;
       const user = await userService.rolSwitch(userId);
-      req.session.user.role = user.role;
+      // No actualizar la sesión del usuario que realiza la solicitud
+      //req.session.user.role = user.role;
 
-      const responseMessage = `Se ha actualizado correctamente la propiedad rol del usuario a ${req.session.user.role}`;
+      const responseMessage = `Se ha actualizado correctamente la propiedad rol del usuario a ${user.role}`;
 
       res.status(200).json({
         message: responseMessage,

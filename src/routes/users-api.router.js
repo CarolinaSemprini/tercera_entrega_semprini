@@ -10,6 +10,10 @@ usersApiRouter.put("/:_id", usersController.update); /* <---- ACTUALIZAR UN USUA
 usersApiRouter.delete("/deleteInactiveUsers", usersController.deleteInactiveUsers); /* <---- ELIMINAR USUARIOS INACTIVOS EN LOS ULTIMOS 2 DIAS*/
 usersApiRouter.get("/premium/:uid", usersController.premiumSwitch); /* <---- ACTUALIZAR PROPIEDAD PREMIUM POR ID */
 usersApiRouter.get("/role/:uid", usersController.rolSwitch); /* <---- ACTUALIZAR PROPIEDAD ROL POR ID */
+
+usersApiRouter.post("/role/:uid", usersController.rolSwitch);/*<--- ruta para cambiar el rol del usuario >*/
+
+
 usersApiRouter.post("/:uid/profile", profileUploader.single("profileImage"), usersController.postDocuments); /* <---- SUBIR IMAGENES AL PERFIL DE USUARIO */
 usersApiRouter.delete("/:_id", usersController.delete); /* <---- ELIMINAR UN USUARIO POR ID */
 
