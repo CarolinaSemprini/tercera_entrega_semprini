@@ -245,7 +245,7 @@ class UserController {
       // No actualizar la sesión del usuario que realiza la solicitud
       //req.session.user.role = user.role;
 
-      const responseMessage = `Se ha actualizado correctamente la propiedad rol del usuario a ${user.role}`;
+      const responseMessage = `Se ha actualizado correctamente la propiedad rol del usuario a ${user.role} y premium a ${user.premium}`;
 
       res.status(200).json({
         message: responseMessage,

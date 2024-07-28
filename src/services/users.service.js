@@ -149,10 +149,15 @@ class UserService {
       }
       if (user.role === "admin") {
         user.role = "user";
+        user.premium = false;
       } else if (user.role === "user") {
+        user.role = "premium";
+        user.premium = true;
+      } else if (user.role === "premium") {
         user.role = "admin";
+        user.premium = false;
       }
-      const updatedUser = await this.update(userId, { role: user.role });
+      const updatedUser = await this.update(userId, { role: user.role, premium: user.premium });
       return updatedUser;
     } catch (e) {
       logger.error(e.message);
