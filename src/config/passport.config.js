@@ -11,6 +11,11 @@ import { sessionsController } from "../controllers/sessions.controller.js";
 
 const LocalStrategy = local.Strategy;
 
+const githubCallbackURL =
+  process.env.NODE_ENV === "production"
+    ? "https://terceraentregasemprini-production.up.railway.app/api/sessions/githubcallback"
+    : "http://localhost:8080/api/sessions/githubcallback";
+
 export function iniPassport() {
   passport.use(
     "login",
@@ -63,9 +68,9 @@ export function iniPassport() {
     "github",
     new GitHubStrategy(
       {
-        clientID: "1fcb23e4f6944259df14",
+        clientID: "Ov23liaeimx2vJNn4ku4",
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: "http://localhost:8080/api/sessions/githubcallback",
+        callbackURL: githubCallbackURL,
       },
       async (accesToken, _, profile, done) => {
         try {
